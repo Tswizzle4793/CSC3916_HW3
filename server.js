@@ -88,14 +88,30 @@ router.post('/signin', function (req, res) {
 
 //post save a movie
 router.post('/movie',function(req,res){
-    var newMovie = new Movie();
-    newMovie.title = req.body.title;
-    newMovie.year = req.body.year;
-    newMovie.genre = req.body.genre;
-    newMovie.actorOne = req.body.actorOne;
-    newMovie.actorTwo = req.body.actorTwo;
-    newMovie.actorThree = req.body.actorThree;
-})
+
+
+    Movie.findOne({title:req.body.title}, function(err,movie){
+        if(err) console.log(err);
+        if(movie){
+            res.json({success: false, msg:"Movie with title already exists"});
+        }
+        else {
+            var newMovie = new Movie();
+            newMovie.title = req.body.title;
+            newMovie.year = req.body.year;
+            newMovie.genre = req.body.genre;
+            newMovie.actorOne = req.body.actorOne;
+            newMovie.actorTwo = req.body.actorTwo;
+            newMovie.actorThree = req.body.actorThree;
+
+            newMovie.save(function(err,newMovie){
+                if(err) console.log(err);
+                res.json({success: true, msg:"Movie added"})
+            });
+        }
+    });
+
+});
 //put updates a movie
 //delete delete a movie
 //get gets a movie
