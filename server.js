@@ -90,26 +90,34 @@ router.post('/signin', function (req, res) {
 router.post('/movie',function(req,res){
 
 
-    Movie.findOne({title:req.body.title}, function(err,movie){
-        if(err) console.log(err);
-        if(movie){
-            res.json({success: false, msg:"Movie with title already exists"});
-        }
-        else {
-            var newMovie = new Movie();
-            newMovie.title = req.body.title;
-            newMovie.year = req.body.year;
-            newMovie.genre = req.body.genre;
-            newMovie.actorOne = req.body.actorOne;
-            newMovie.actorTwo = req.body.actorTwo;
-            newMovie.actorThree = req.body.actorThree;
+    if ( !req.body.actorOne || !req.body.actorTwo || !req.body.actorThree) {
+        res.json({success: false, msg: 'Please include at least three actors to add a movie'})
+    }
+    else if(!req.body.title || !req.body.year || !req.body.genre){
+        res.json({success: false, msg: 'Please add a title, year, and genre to add a movie'})
+    }
+    else {
 
-            newMovie.save(function(err,newMovie){
-                if(err) console.log(err);
-                res.json({success: true, msg:"Movie added"})
-            });
-        }
-    });
+        Movie.findOne({title: req.body.title}, function (err, movie) {
+            if (err) console.log(err);
+            if (movie) {
+                res.json({success: false, msg: "Movie with title already exists"});
+            } else {
+                var newMovie = new Movie();
+                newMovie.title = req.body.title;
+                newMovie.year = req.body.year;
+                newMovie.genre = req.body.genre;
+                newMovie.actorOne = req.body.actorOne;
+                newMovie.actorTwo = req.body.actorTwo;
+                newMovie.actorThree = req.body.actorThree;
+
+                newMovie.save(function (err, newMovie) {
+                    if (err) console.log(err);
+                    res.json({success: true, msg: "Movie added"})
+                });
+            }
+        });
+    }
 
 });
 //put updates a movie
