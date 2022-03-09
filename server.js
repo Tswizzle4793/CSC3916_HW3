@@ -99,7 +99,7 @@ router.post('/movie',function(req,res){
     else {
 
         Movie.findOne({title: req.body.title}, function (err, movie) {
-            if (err) console.log(err);
+            if (err) res.json(err)//console.log(err);
             if (movie) {
                 res.json({success: false, msg: "Movie with title already exists"});
             } else {
@@ -127,14 +127,47 @@ router.put('/movie', function(req,res){
         res.json({success: false, msg: 'Please add the title of the movie you want to update'})
     }
     else{
-        Movie.updateOne(req.body.title, req.body, function(err,res){
-            if (err) res.send(err);
-            res.json({success: true, msg: "Movie Updated"});
+        Movie.findOne({title: req.body.title}, function (err, movie){
+            if(err) res.json(err)
+            if(movie){
+                Movie.updateOne(movie, req.body, function(err) {
+                    if (err) res.json(err)
+                    res.json({success: true, msg: "Movie Updated"});
+                })
+            }
         })
     }
 })
 
-//delete delete a movie
+//delete deletes a movie
+
+router.delete('/movie', function(req, res){
+    //Movie.deleteOne({title: 'original movie'});
+    // Movie.deleteOne({title: req.body.title},function(err){
+       // if (err) res.json(err)
+        //res.json({success: true, msg: "Movie Deleted"});
+    //})
+
+    console.log("the delete code");
+    if(!req.body.title){
+        res.json({success: false, msg: 'Please add the title of the movie you want to delete'})
+        console.log("no title");
+    }
+    else{
+        Movie.findOne({title: req.body.title}, function(err,movie){
+            if(err) res.json(err)
+            if(movie){
+                console.log("got into the movie thing");
+                Movie.deleteOne({title: req.body.title}, function(err){
+                //Movie.deleteOne(movie, function(err){
+                    if(err) res.json(err)
+                    res.json({success: true, msg: "Movie Deleted"});
+                })
+            }
+        })
+    }
+});
+
 //get gets a movie
 
 

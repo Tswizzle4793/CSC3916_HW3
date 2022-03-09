@@ -54,7 +54,7 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
        // })
     });
 
-   let movie_details =
+   /*let movie_details =
        {
 
             title: 'test movie the third one',
@@ -74,6 +74,39 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
                     console.log(JSON.stringify(res.body));
                     //res.should.have.status(200);
                     //res.body.success.should.be.eql(true);
+                    done();
+                })
+        })
+    });*/
+    /*let update_movie =
+        {
+            title: 'test movie the second one',
+            year: '1100',
+            genre: 'Adventure',
+            actorOne: "'test actor','test character'"
+        }
+        describe('/movie', () =>{
+            it('should update a movie', (done) =>{
+                chai.request(server)
+                    .put('/movie')
+                    .send(update_movie)
+                    .end((err, res) =>{
+                    console.log(JSON.stringify(res.body));
+                    done();
+                })
+            })
+        });*/
+    let delete_movie ={
+        title: 'another test movie'
+
+    }
+    describe('/movie', () =>{
+        it("should delete a movie", (done) =>{
+            chai.request(server)
+                .delete('/movie')
+                .send(delete_movie)
+                .end((err, res) =>{
+                    console.log(JSON.stringify(res.body));
                     done();
                 })
         })
