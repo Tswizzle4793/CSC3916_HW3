@@ -112,8 +112,8 @@ router.post('/movie',function(req,res){
                 newMovie.actorThree = req.body.actorThree;
 
                 newMovie.save(function (err, newMovie) {
-                    if (err) console.log(err);
-                    res.json({success: true, msg: "Movie added"})
+                    if (err) res.send(err);
+                    res.json({success: true, msg: "Movie Added"})
                 });
             }
         });
@@ -121,6 +121,19 @@ router.post('/movie',function(req,res){
 
 });
 //put updates a movie
+
+router.put('/movie', function(req,res){
+    if(!req.body.title){
+        res.json({success: false, msg: 'Please add the title of the movie you want to update'})
+    }
+    else{
+        Movie.updateOne(req.body.title, req.body, function(err,res){
+            if (err) res.send(err);
+            res.json({success: true, msg: "Movie Updated"});
+        })
+    }
+})
+
 //delete delete a movie
 //get gets a movie
 
