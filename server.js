@@ -12,6 +12,7 @@ var authJwtController = require('./auth_jwt');
 var jwt = require('jsonwebtoken');
 var cors = require('cors');
 var User = require('./Users');
+var Movie = require('./Movies');
 
 var app = express();
 app.use(cors());
@@ -84,6 +85,21 @@ router.post('/signin', function (req, res) {
         })
     })
 });
+
+//post save a movie
+router.post('/movie',function(req,res){
+    var newMovie = new Movie();
+    newMovie.title = req.body.title;
+    newMovie.year = req.body.year;
+    newMovie.genre = req.body.genre;
+    newMovie.actorOne = req.body.actorOne;
+    newMovie.actorTwo = req.body.actorTwo;
+    newMovie.actorThree = req.body.actorThree;
+})
+//put updates a movie
+//delete delete a movie
+//get gets a movie
+
 
 app.use('/', router);
 app.listen(process.env.PORT || 8080);
