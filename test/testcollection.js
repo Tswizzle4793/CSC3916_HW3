@@ -57,12 +57,12 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
    /*let movie_details =
        {
 
-            title: 'test movie the third one',
-           year: '2000',
-            genre: 'Action',
-            actorOne: "'Jim actor','Jim character'",
-            actorTwo: "'John actor','John character'",
-            actorThree: "'James actor','James character'"
+            title: 'test get movie',
+            year: '3009',
+            genre: 'Comedy',
+            actorOne: "'Jane Doe','Jane Character'",
+            actorTwo: "'John Doe','John Character'",
+            actorThree: "'James Lastname','James Charactername'"
        }
 
     describe('/movie', () => {
@@ -96,7 +96,7 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
                 })
             })
         });*/
-    let delete_movie ={
+    /*let delete_movie ={
         title: 'another test movie'
 
     }
@@ -110,7 +110,22 @@ describe('Register, Login and Call Test Collection with Basic Auth and JWT Auth'
                     done();
                 })
         })
-    });
+    });*/
+    let get_movie ={
+        title: "test get movie",
+        year:2000
+    }
 
+    describe('/movie', () =>{
+        it("should get a movies", (done) =>{
+            chai.request(server)
+                .get('/movie')
+                .send(get_movie)
+                .end((err,res) =>{
+                    console.log(JSON.stringify(res.body));
+                    done();
+                })
+        })
+    });
 
 });
