@@ -161,16 +161,16 @@ router.delete('/movie', function(req, res){
 
 //get gets a movie
 router.get('/movie', function(req,res){
-    if(!req.body.title){
-        res.json({success: false, msg: 'Please add the title of the movie you want to get'})
-    }
-    else{
-        Movie.findOne({title: req.body.title},
+    //if(!req.body.title){
+      //  res.json({success: false, msg: 'Please add the title of the movie you want to get'})
+    //}
+    //else{
+        Movie.find({},
             {_id:0,title:1, year:1, genre:1, actorOne:1, actorTwo:1, actorThree:1}, function(err,movie){
             if(err) res.json(err)
             res.json({success: true, msg: movie})
         })
-    }
+    //}
 })
 
 app.use('/', router);
